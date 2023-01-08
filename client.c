@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 {
   int sd;                    // descriptorul de socket
   struct sockaddr_in server; // structura folosita pentru conectare
-  char cmd[100];             // comanda transmisa
+  char cmd[1000];             // comanda transmisa
 
   // exista toate argumentele in linia de comanda? 
   if (argc != 3)
@@ -74,16 +74,16 @@ int main(int argc, char *argv[])
 
     //citirea raspunsului dat de server 
     //apel blocant paana cind serverul raspunde) /
-    if (read(sd, cmd, 100) < 0)
+    if (read(sd, cmd, 1000) < 0)
     {
       perror("[client]Eroare la read() de la server.\n");
       return errno;
     }
-    if (strcmp(cmd, "exit\n") == 0) // trb parse cmd
-        exit(0);
+    if (strcmp(cmd, "disconnect\n") == 0) // trb parse cmd
+          exit(0);
     
     // afisam mesajul primit 
-    printf("[client]Comanda primita este: %s\n", cmd);
+    printf("[client]Comanda primita este:\n%s\n", cmd);
   }
   // inchidem conexiunea, am terminat 
   //close(sd);
